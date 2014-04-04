@@ -2,7 +2,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="layout" content="main" />
-    <title>Generate BarCode branch 1 - 234234</title>
+    <title>Generate BarCode</title>
 </head>
 <body>
 
