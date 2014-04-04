@@ -39,7 +39,7 @@ class BarCodeGeneratorController {
         // step 4
         PdfContentByte cb = writer.getDirectContent();
 
-        Image image = null
+        Image image = null      // Master banch
 
 //        // EAN 13
 //        document.add(new Paragraph("Barcode EAN.UCC-13"));
