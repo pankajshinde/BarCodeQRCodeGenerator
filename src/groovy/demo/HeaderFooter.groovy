@@ -78,8 +78,19 @@ class HeaderFooter extends PdfPageEventHelper {
 
 
 
+            String plainText = "Password";
+            String encryptedText = AESEncryption.encrypt(plainText);
+            String decryptedText = AESEncryption.decrypt(encryptedText);
 
-            code128.setCode(barCodeImageData + " - " + pagenumber);
+            System.out.println("Plain Text : " + plainText);
+            System.out.println("Encrypted Text : " + encryptedText);
+            System.out.println("Decrypted Text : " + decryptedText);
+
+            String encryptedBarCodeImageData = AESEncryption.encrypt(barCodeImageData);
+            code128.setCode(encryptedBarCodeImageData + " - " + pagenumber);
+
+
+
 
             element = code128.createImageWithBarcode(cb, null, null)
 
@@ -101,7 +112,7 @@ class HeaderFooter extends PdfPageEventHelper {
 
             document1.close();
 
-            img2.setAbsolutePosition((rect.getRight() - 250) as float, rect.getTop());
+            img2.setAbsolutePosition((rect.getRight() - 450) as float, rect.getTop());
             writer.getDirectContent().addImage(img2);
 
 
