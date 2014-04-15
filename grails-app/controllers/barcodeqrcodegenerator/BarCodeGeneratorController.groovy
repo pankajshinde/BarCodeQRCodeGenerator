@@ -1,5 +1,4 @@
 package barcodeqrcodegenerator
-
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.EncodeHintType
 import com.google.zxing.MultiFormatWriter
@@ -7,28 +6,79 @@ import com.google.zxing.client.j2se.MatrixToImageWriter
 import com.google.zxing.common.BitMatrix
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import com.lowagie.text.Document
-import com.lowagie.text.Image
+import com.lowagie.text.PageSize
 import com.lowagie.text.Paragraph
-import com.lowagie.text.Rectangle
-import com.lowagie.text.pdf.Barcode
 import com.lowagie.text.pdf.Barcode128
-import com.lowagie.text.pdf.BarcodeEAN
 import com.lowagie.text.pdf.PdfContentByte
 import com.lowagie.text.pdf.PdfWriter
+import demo.HeaderFooter
 
 import javax.imageio.ImageIO
-import java.awt.Color
+import java.awt.*
 import java.awt.image.BufferedImage
+/**
+ * http://itextpdf.com/examples/iia.php?id=297
+ */
 
 class BarCodeGeneratorController {
 
     def index() { }
 
+    def barCodeWithPageNumber() {
+
+        println "-----------barCodeWithPageNumber-----------------"
+
+//        String RESULT = "c:/BarCodeQRCodeGenerator/barcodes.pdf";
+//
+//        // step 1
+//        Document document = new Document(new Rectangle(340, 842));
+//        // step 2
+//        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(RESULT));
+//        // step 3
+//        document.open();
+//        // step 4
+//        PdfContentByte cb = writer.getDirectContent();
+//
+//        // CODE 128
+//        document.add(new Paragraph("Barcode 128"));
+//        Barcode128 code128 = new Barcode128();
+//        code128.setCode("P-132499999965-5");
+//
+//        document.add(code128.createImageWithBarcode(cb, null, null));
+//
+//        document.close();
+//        render "barCodeWithPageNumber generated on - " + new Date()
+
+
+        String RESULT = "c:/BarCodeQRCodeGenerator/barcodes.pdf";
+        Document document = new Document(PageSize.A4, 36, 36, 54, 54);
+        // step 2
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(RESULT));
+        HeaderFooter event = new HeaderFooter();
+        writer.setBoxSize('art', new com.lowagie.text.Rectangle(36, 54, 559, 788));
+        writer.setPageEvent(event);
+        // step 3
+        document.open();
+
+        Paragraph paragraph = new Paragraph();
+        for (int i = 0; i < 200; i++) {
+            paragraph.add("\n Hello World! Hello People! " + i);
+        }
+        document.add(paragraph);
+
+        // step 5
+        document.close();
+
+
+        render "barCodeWithPageNumber generated on - " + new Date()
+
+    }
+
     def generateBarCode() {
 
         println "-----------generateBarCode-----------------"
 
-        String RESULT = "c:/barcodes.pdf";
+        String RESULT = "c:/BarCodeQRCodeGenerator/barcodes.pdf";
 
         // step 1
         Document document = new Document(new Rectangle(340, 842));
@@ -39,7 +89,7 @@ class BarCodeGeneratorController {
         // step 4
         PdfContentByte cb = writer.getDirectContent();
 
-        Image image = null      // Master + Branch 1
+        Image image = null      // Master + Branch 1   123       13123213
         
 
 
@@ -61,7 +111,7 @@ class BarCodeGeneratorController {
         // CODE 128
         document.add(new Paragraph("Barcode 128"));
         Barcode128 code128 = new Barcode128();
-        code128.setCode("P^132465^5");
+        code128.setCode("P-132465-5");
         image = code128.createImageWithBarcode(cb, null, null)
         document.add(image);
 
@@ -73,7 +123,7 @@ class BarCodeGeneratorController {
         bytesOut.flush();
         byte[] pngImageData = bytesOut.toByteArray();
 
-        FileOutputStream fos = new FileOutputStream("c:/barcode.png");
+        FileOutputStream fos = new FileOutputStream("c:/BarCodeQRCodeGenerator/barcode.png");
         fos.write(pngImageData);
         fos.close();
 
